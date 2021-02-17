@@ -26,6 +26,9 @@ object Shop extends App {
     "£" + price.setScale(2)
   }
 
+  class Offer(val buyableItem: BuyableItem, val amount: Integer, val name: String) {
+  }
+
   trait BuyableItem {
     def name: String
     def price: BigDecimal

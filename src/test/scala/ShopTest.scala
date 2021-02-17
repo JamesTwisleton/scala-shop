@@ -25,12 +25,6 @@ class ShopTest extends org.scalatest.funsuite.AnyFunSuite {
       val shoppingCart: ShoppingCart = new ShoppingCart(Array("Bad", "Apple"))
     }
   }
-  test(
-    "Shopping cart total initializes correctly given valid String input"
-  ) {
-    val shoppingCart: ShoppingCart = new ShoppingCart(Array("Apple", "Orange"))
-    assert(shoppingCart.totalPrice === 0.85)
-  }
 
   test(
     "Receipt is generated correctly"
@@ -39,4 +33,16 @@ class ShopTest extends org.scalatest.funsuite.AnyFunSuite {
       "\nThank you for shopping at Twisleton Stores!\n\nPurchases:\n\nApple               £0.60\nOrange              £0.25\n\nTotal:              £0.85\n"
     assert(getReceipt(Array("Apple", "Orange")) === expectedReceipt)
   }
+
+  val offer = new Offer(Apple, 2, "BOGOF")
+  test("Offer BuyableItem set correctly") {
+    assert(offer.buyableItem === Apple)
+  }
+  test("Offer amount set correctly") {
+    assert(offer.amount === 2)
+  }
+  test("Offer name set correctly") {
+    assert(offer.name === "BOGOF")
+  }
+
 }
