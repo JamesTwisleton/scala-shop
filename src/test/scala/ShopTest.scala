@@ -14,15 +14,21 @@ class ShopTest extends org.scalatest.funsuite.AnyFunSuite {
     assert(Orange.price === 0.25)
   }
 
-  test("Shopping cart items initialize properly given correct String input") {
+  test("Shopping cart items initialize correctly given valid String input") {
     val shoppingCart: ShoppingCart = new ShoppingCart(Array("Apple", "Orange"))
     assert(shoppingCart.items === Array(Apple, Orange))
   }
   test(
-    "Shopping cart initialization throws exception given incorrect String input"
+    "Shopping cart initialization throws exception given invalid String input"
   ) {
     assertThrows[Exception] {
       val shoppingCart: ShoppingCart = new ShoppingCart(Array("Bad", "Apple"))
     }
+  }
+  test(
+    "Shopping cart total initializes correctly given valid String input"
+  ) {
+    val shoppingCart: ShoppingCart = new ShoppingCart(Array("Apple", "Orange"))
+    assert(shoppingCart.totalPrice === 0.85)
   }
 }

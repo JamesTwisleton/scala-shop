@@ -14,13 +14,14 @@ object Shop extends App {
     val price = 0.25
   }
 
-  case class ShoppingCart(providedItems: Array[String]) {
+  class ShoppingCart(providedItems: Array[String]) {
     val items: Array[BuyableItem] = providedItems.map(
       _.toLowerCase match {
         case "apple"  => Apple
         case "orange" => Orange
-        case _ => throw new Exception("Invalid item")
+        case _        => throw new Exception("Invalid item")
       }
     )
+    val totalPrice: BigDecimal = items.map(_.price).sum
   }
 }
