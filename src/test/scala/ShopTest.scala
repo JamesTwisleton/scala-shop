@@ -3,7 +3,7 @@ class ShopTest extends org.scalatest.funsuite.AnyFunSuite {
   test("Apple case object has name \"Apple\"") {
     assert(Apple.name === "Apple")
   }
-  test("Apple case object has price 0.6") {
+  test("Apple has price 0.6") {
     assert(Apple.price === 0.6)
   }
 
@@ -30,5 +30,13 @@ class ShopTest extends org.scalatest.funsuite.AnyFunSuite {
   ) {
     val shoppingCart: ShoppingCart = new ShoppingCart(Array("Apple", "Orange"))
     assert(shoppingCart.totalPrice === 0.85)
+  }
+
+  test(
+    "Receipt is generated correctly"
+  ) {
+    val expectedReceipt: String =
+      "\nThank you for shopping at Twisleton Stores!\n\nPurchases:\n\nApple               £0.60\nOrange              £0.25\n\nTotal:              £0.85\n"
+    assert(getReceipt(Array("Apple", "Orange")) === expectedReceipt)
   }
 }

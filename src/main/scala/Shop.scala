@@ -1,4 +1,32 @@
 object Shop extends App {
+
+  println(getReceipt(args))
+
+  def getReceipt(items: Array[String]): String = {
+    val shoppingCart: ShoppingCart = new ShoppingCart(items)
+    var receipt: String =
+      "\nThank you for shopping at Twisleton Stores!\n\nPurchases:\n\n"
+    val priceStringFormat: String = "%-20s%s%n"
+
+    shoppingCart.items.foreach(item => {
+      receipt =
+        receipt.concat(priceStringFormat.format(item, formatPrice(item.price)))
+    })
+
+    receipt = receipt.concat(
+      "\n" +
+        priceStringFormat.format(
+          "Total: ",
+          formatPrice((shoppingCart.totalPrice))
+        )
+    )
+    return receipt
+  }
+
+  def formatPrice(price: BigDecimal): String = {
+    return "£" + price.setScale(2)
+  }
+
   trait BuyableItem {
     def name: String
     def price: BigDecimal
