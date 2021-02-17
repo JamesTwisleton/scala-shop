@@ -1,7 +1,6 @@
 .bloop/
 .metals/
 .vscode/
-
 *.class
 *.log
 .cache/
@@ -13,3 +12,4 @@ lib_managed/
 src_managed/
 project/boot/
 project/plugins/project/
+.bsp/
