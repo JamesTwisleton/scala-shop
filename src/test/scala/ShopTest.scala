@@ -34,34 +34,73 @@ class ShopTest extends org.scalatest.funsuite.AnyFunSuite {
     assert(getReceipt(Array("Apple", "Orange")) === expectedReceipt)
   }
 
-  val offer = new Offer(Apple, 2, "BOGOF")
+  val bogofOnApplesOffer = new Offer(Apple, 2, "BOGOF")
+  val threeForThePriceOfTwoOnOrangesOffer =
+    new Offer(Orange, 3, "Three for the price of two on Oranges")
   val shoppingCartOffersWillApplyTo = new ShoppingCart(
     Array("Apple", "Apple", "Orange", "Orange", "Orange")
   )
   test("Offer BuyableItem set correctly") {
-    assert(offer.buyableItem === Apple)
+    assert(bogofOnApplesOffer.buyableItem === Apple)
   }
   test("Offer amount set correctly") {
-    assert(offer.discountAmount === 2)
+    assert(bogofOnApplesOffer.discountAmount === 2)
   }
   test("Offer name set correctly") {
-    assert(offer.name === "BOGOF")
+    assert(bogofOnApplesOffer.name === "BOGOF")
   }
   test("\"BOGOF on Apples\" offer returns correct discount") {
     assert(
-      offer.getDiscount(shoppingCartOffersWillApplyTo) === 0.6
+      bogofOnApplesOffer.getDiscount(shoppingCartOffersWillApplyTo) === 0.6
     )
   }
   test(
     "\"Three for the price of two on Oranges\" offer returns correct discount"
   ) {
-    val threeForThePriceOfTwoOnOrangesOffer =
-      new Offer(Orange, 3, "Three for the price of two on Oranges")
+
     assert(
       threeForThePriceOfTwoOnOrangesOffer.getDiscount(
         shoppingCartOffersWillApplyTo
       ) === 0.25
     )
+  }
+
+  test("Checkout without any offers has correct subtotal and total") {
+    val checkout = new Checkout(shoppingCartOffersWillApplyTo, Array())
+    assert(checkout.subtotal === 1.95)
+  }
+
+  test(
+    "Checkout with \"BOGOF on Apples\" offer has correct subtotal and total"
+  ) {
+    val checkout = new Checkout(
+      shoppingCartOffersWillApplyTo,
+      Array(bogofOnApplesOffer)
+    )
+    assert(checkout.subtotal === 1.95)
+    assert(checkout.total === 1.35)
+  }
+
+  test(
+    "Checkout with \"Three for the price of two on Oranges\" offer has correct subtotal and total"
+  ) {
+    val checkout = new Checkout(
+      shoppingCartOffersWillApplyTo,
+      Array(threeForThePriceOfTwoOnOrangesOffer)
+    )
+    assert(checkout.subtotal === 1.95)
+    assert(checkout.total === 1.70)
+  }
+
+  test(
+    "Checkout with \"BOGOF on Apples\" and \"Three for the price of two on Oranges\" offers has correct subtotal and total"
+  ) {
+    val checkout = new Checkout(
+      shoppingCartOffersWillApplyTo,
+      Array(bogofOnApplesOffer, threeForThePriceOfTwoOnOrangesOffer)
+    )
+    assert(checkout.subtotal === 1.95)
+    assert(checkout.total === 1.10)
   }
 
 }

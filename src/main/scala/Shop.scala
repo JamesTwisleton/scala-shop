@@ -70,4 +70,11 @@ object Shop extends App {
     )
     val totalPrice: BigDecimal = items.map(_.price).sum
   }
+
+  class Checkout(val shoppingCart: ShoppingCart, val offers: Array[Offer]) {
+    def subtotal = shoppingCart.totalPrice
+    def total = offers.foldLeft(subtotal)((acc, currentOffer) => {
+      acc - currentOffer.getDiscount(shoppingCart)
+    })
+  }
 }
