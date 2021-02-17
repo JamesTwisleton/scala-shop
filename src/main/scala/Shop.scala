@@ -26,7 +26,23 @@ object Shop extends App {
     "£" + price.setScale(2)
   }
 
-  class Offer(val buyableItem: BuyableItem, val amount: Integer, val name: String) {
+  class Offer(
+      val buyableItem: BuyableItem,
+      val discountAmount: Integer,
+      val name: String
+  ) {
+    def getDiscount(shoppingCart: ShoppingCart): BigDecimal = {
+      val buyableItemCount = shoppingCart.items
+        .groupBy(identity)
+        .mapValues(_.size)
+        .getOrElse(buyableItem, 0)
+      if (buyableItemCount < discountAmount)
+        0
+      else if (buyableItemCount % discountAmount == 0)
+        (buyableItemCount / discountAmount) * buyableItem.price
+      else
+        (buyableItemCount / discountAmount).floor * buyableItem.price
+    }
   }
 
   trait BuyableItem {

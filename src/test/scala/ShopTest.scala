@@ -35,14 +35,22 @@ class ShopTest extends org.scalatest.funsuite.AnyFunSuite {
   }
 
   val offer = new Offer(Apple, 2, "BOGOF")
+  val shoppingCartOffersWillApplyTo = new ShoppingCart(
+    Array("Apple", "Apple", "Orange", "Orange", "Orange")
+  )
   test("Offer BuyableItem set correctly") {
     assert(offer.buyableItem === Apple)
   }
   test("Offer amount set correctly") {
-    assert(offer.amount === 2)
+    assert(offer.discountAmount === 2)
   }
   test("Offer name set correctly") {
     assert(offer.name === "BOGOF")
+  }
+
+  test("BOGOF on Apples offer returns correct discount") {
+    val discountAmount = offer.getDiscount(shoppingCartOffersWillApplyTo)
+    assert(discountAmount === 0.6)
   }
 
 }
