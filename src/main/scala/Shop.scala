@@ -13,18 +13,17 @@ object Shop extends App {
         receipt.concat(priceStringFormat.format(item, formatPrice(item.price)))
     })
 
-    receipt = receipt.concat(
+    receipt.concat(
       "\n" +
         priceStringFormat.format(
           "Total: ",
           formatPrice((shoppingCart.totalPrice))
         )
     )
-    return receipt
   }
 
   def formatPrice(price: BigDecimal): String = {
-    return "£" + price.setScale(2)
+    "£" + price.setScale(2)
   }
 
   trait BuyableItem {
