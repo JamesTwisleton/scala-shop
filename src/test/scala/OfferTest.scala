@@ -2,7 +2,7 @@ import Shop._
 
 class OfferTest extends org.scalatest.funsuite.AnyFunSuite {
 
-  val bogofOnApplesOffer = new Offer(Apple, 2, "BOGOF")
+  val bogofOnApplesOffer = new Offer(Apple, 2, "BOGOF on Apples")
   val threeForThePriceOfTwoOnOrangesOffer =
     new Offer(Orange, 3, "Three for the price of two on Oranges")
   val shoppingCart = new ShoppingCart(
@@ -15,7 +15,7 @@ class OfferTest extends org.scalatest.funsuite.AnyFunSuite {
     assert(bogofOnApplesOffer.discountAmount === 2)
   }
   test("Offer name set correctly") {
-    assert(bogofOnApplesOffer.name === "BOGOF")
+    assert(bogofOnApplesOffer.name === "BOGOF on Apples")
   }
   test("\"BOGOF on Apples\" offer returns correct discount") {
     assert(

@@ -1,24 +1,42 @@
 object Shop extends App {
 
-  println(getReceipt(args))
+  val shoppingCart = new ShoppingCart(args)
 
-  def getReceipt(items: Array[String]): String = {
-    val shoppingCart: ShoppingCart = new ShoppingCart(items)
-    var receipt: String =
+  val bogofOnApplesOffer =
+    new Offer(Apple, 2, "BOGOF on Apples")
+  val threeForThePriceOfTwoOnOrangesOffer =
+    new Offer(Orange, 3, "Three for the price of two on Oranges")
+
+  val checkout =
+    new Checkout(
+      shoppingCart,
+      Array(bogofOnApplesOffer, threeForThePriceOfTwoOnOrangesOffer)
+    )
+
+  println(generateReceipt(checkout))
+
+  def generateReceipt(checkout: Checkout): String = {
+    var receipt =
       "\nThank you for shopping at Twisleton Stores!\n\nPurchases:\n\n"
-    val priceStringFormat: String = "%-20s%s%n"
+    val priceStringFormat = "%-20s%s%n"
 
-    shoppingCart.items.foreach(item => {
+    checkout.shoppingCart.items.foreach(item => {
       receipt =
         receipt.concat(priceStringFormat.format(item, formatPrice(item.price)))
     })
 
-    receipt.concat(
+    receipt = receipt.concat(
       "\n" +
         priceStringFormat.format(
-          "Total: ",
-          formatPrice((shoppingCart.totalPrice))
+          "Subtotal: ",
+          formatPrice(checkout.subtotal)
         )
+    )
+    receipt.concat(
+      priceStringFormat.format(
+        "Total: ",
+        formatPrice(checkout.total)
+      )
     )
   }
 
