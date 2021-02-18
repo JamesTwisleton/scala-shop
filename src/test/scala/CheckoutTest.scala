@@ -11,39 +11,46 @@ class CheckoutTest extends org.scalatest.funsuite.AnyFunSuite {
 
   test("Checkout without any offers has correct subtotal and total") {
     val checkout = new Checkout(shoppingCart, Array())
-    assert(checkout.subtotal === 1.95)
+    assert(checkout.total === 1.95)
   }
 
   test(
-    "Checkout with \"BOGOF on Apples\" offer has correct subtotal and total"
+    "Checkout with \"BOGOF on Apples\" offer has correct total"
   ) {
     val checkout = new Checkout(
       shoppingCart,
       Array(bogofOnApplesOffer)
     )
-    assert(checkout.subtotal === 1.95)
     assert(checkout.total === 1.35)
   }
 
   test(
-    "Checkout with \"Three for the price of two on Oranges\" offer has correct subtotal and total"
+    "Checkout with \"Three for the price of two on Oranges\" offer has correct total"
   ) {
     val checkout = new Checkout(
       shoppingCart,
       Array(threeForThePriceOfTwoOnOrangesOffer)
     )
-    assert(checkout.subtotal === 1.95)
     assert(checkout.total === 1.70)
   }
 
   test(
-    "Checkout with \"BOGOF on Apples\" and \"Three for the price of two on Oranges\" offers has correct subtotal and total"
+    "Checkout with \"BOGOF on Apples\" and \"Three for the price of two on Oranges\" offers has correct total"
   ) {
     val checkout = new Checkout(
       shoppingCart,
       Array(bogofOnApplesOffer, threeForThePriceOfTwoOnOrangesOffer)
     )
-    assert(checkout.subtotal === 1.95)
     assert(checkout.total === 1.10)
+  }
+  test(
+    "Checkout with \"BOGOF on Apples\" and \"Three for the price of two on Oranges\" offers has correct offersApplied"
+  ) {
+    val checkout = new Checkout(
+      shoppingCart,
+      Array(bogofOnApplesOffer, threeForThePriceOfTwoOnOrangesOffer)
+    )
+    println(checkout.appliedOffers)
+    // assert(checkout.appliedOffers(0) === Array(bogofOnApplesOffer, threeForThePriceOfTwoOnOrangesOffer))
   }
 }

@@ -1,3 +1,5 @@
+import scala.collection.mutable.ArrayBuffer
+
 object Shop extends App {
 
   val shoppingCart = new ShoppingCart(args)
@@ -29,7 +31,7 @@ object Shop extends App {
       "\n" +
         priceStringFormat.format(
           "Subtotal: ",
-          formatPrice(checkout.subtotal)
+          formatPrice(checkout.shoppingCart.total)
         )
     )
     receipt.concat(
@@ -86,13 +88,17 @@ object Shop extends App {
         case _        => throw new Exception("Invalid item")
       }
     )
-    val totalPrice: BigDecimal = items.map(_.price).sum
+    val total: BigDecimal = items.map(_.price).sum
   }
 
   class Checkout(val shoppingCart: ShoppingCart, val offers: Array[Offer]) {
-    def subtotal = shoppingCart.totalPrice
-    def total = offers.foldLeft(subtotal)((acc, currentOffer) => {
-      acc - currentOffer.getDiscount(shoppingCart)
+    var appliedOffers = ArrayBuffer[Offer]()
+    def total = offers.foldLeft(shoppingCart.total)((acc, currentOffer) => {
+      val discount = currentOffer.getDiscount(shoppingCart)
+      if (discount != 0) {
+        appliedOffers += currentOffer
+      }
+      acc - discount
     })
   }
 }
