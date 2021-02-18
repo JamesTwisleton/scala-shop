@@ -1,6 +1,7 @@
+import org.scalatest.funsuite.AnyFunSuite
 import Shop._
 
-class ShoppingCartTest extends org.scalatest.funsuite.AnyFunSuite {
+class ShoppingCartTest extends AnyFunSuite {
 
   test("Shopping cart items initialize correctly given valid String input") {
     val shoppingCart: ShoppingCart = new ShoppingCart(Array("Apple", "Orange"))

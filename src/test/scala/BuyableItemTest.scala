@@ -1,5 +1,7 @@
 import Shop._
-class BuyableItemTest extends org.scalatest.funsuite.AnyFunSuite {
+import org.scalatest.funsuite.AnyFunSuite
+
+class BuyableItemTest extends AnyFunSuite {
   test("Apple case object has name \"Apple\"") {
     assert(Apple.name === "Apple")
   }

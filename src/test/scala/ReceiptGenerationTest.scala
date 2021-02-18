@@ -1,6 +1,7 @@
+import org.scalatest.funsuite.AnyFunSuite
 import Shop._
 
-class ReceiptGenerationTest extends org.scalatest.funsuite.AnyFunSuite {
+class ReceiptGenerationTest extends AnyFunSuite {
   test(
     "Receipt with no offers is generated correctly"
   ) {

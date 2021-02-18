@@ -1,6 +1,7 @@
+import org.scalatest.funsuite.AnyFunSuite
 import Shop._
 
-class OfferTest extends org.scalatest.funsuite.AnyFunSuite {
+class OfferTest extends AnyFunSuite {
 
   val bogofOnApplesOffer = new Offer(Apple, 2, "BOGOF on Apples")
   val threeForThePriceOfTwoOnOrangesOffer =

@@ -8,8 +8,10 @@ A shop system designed in Scala
 
 ## Usage
 
+`sbt "run ${item} ${item}..."`
+
 ```
-sbt "run apple apple orange orange orange"
+$ sbt "run apple apple orange orange orange"
 
 Thank you for shopping at Twisleton Stores!
 
@@ -40,6 +42,5 @@ Discounts:                      £0.85
 -------------------------------------
 Total:                          £1.10
 -------------------------------------
-
 
 ```
