@@ -52,6 +52,18 @@ class CheckoutTest extends org.scalatest.funsuite.AnyFunSuite {
     )
     assert(checkout.appliedOffers.length === 2)
     assert(checkout.appliedOffers(0).name === "BOGOF on Apples")
-    assert(checkout.appliedOffers(1).name === "Three for the price of two on Oranges")
+    assert(
+      checkout.appliedOffers(1).name === "Three for the price of two on Oranges"
+    )
+  }
+
+  test(
+    "Checkout with \"BOGOF on Apples\" and \"Three for the price of two on Oranges\" offers has correct totalDiscounts"
+  ) {
+    val checkout = new Checkout(
+      shoppingCart,
+      Array(bogofOnApplesOffer, threeForThePriceOfTwoOnOrangesOffer)
+    )
+    assert(checkout.totalDiscounts === -0.85)
   }
 }

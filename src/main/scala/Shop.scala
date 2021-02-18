@@ -93,8 +93,10 @@ object Shop extends App {
 
   class Checkout(val shoppingCart: ShoppingCart, val offers: Array[Offer]) {
     val appliedOffers = ArrayBuffer[Offer]()
+    var totalDiscounts: BigDecimal = 0
     val total = offers.foldLeft(shoppingCart.total)((acc, currentOffer) => {
       val discount = currentOffer.getDiscount(shoppingCart)
+      totalDiscounts -= discount
       if (discount != 0)
         appliedOffers += currentOffer
       acc - discount
