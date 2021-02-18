@@ -2,7 +2,7 @@ import Shop._
 
 class CheckoutTest extends org.scalatest.funsuite.AnyFunSuite {
 
-  val bogofOnApplesOffer = new Offer(Apple, 2, "BOGOF")
+  val bogofOnApplesOffer = new Offer(Apple, 2, "BOGOF on Apples")
   val threeForThePriceOfTwoOnOrangesOffer =
     new Offer(Orange, 3, "Three for the price of two on Oranges")
   val shoppingCart = new ShoppingCart(
@@ -50,7 +50,8 @@ class CheckoutTest extends org.scalatest.funsuite.AnyFunSuite {
       shoppingCart,
       Array(bogofOnApplesOffer, threeForThePriceOfTwoOnOrangesOffer)
     )
-    println(checkout.appliedOffers)
-    // assert(checkout.appliedOffers(0) === Array(bogofOnApplesOffer, threeForThePriceOfTwoOnOrangesOffer))
+    assert(checkout.appliedOffers.length === 2)
+    assert(checkout.appliedOffers(0).name === "BOGOF on Apples")
+    assert(checkout.appliedOffers(1).name === "Three for the price of two on Oranges")
   }
 }
