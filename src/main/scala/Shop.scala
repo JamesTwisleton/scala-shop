@@ -19,21 +19,38 @@ object Shop extends App {
 
   def generateReceipt(checkout: Checkout): String = {
     var receipt =
-      "\nThank you for shopping at Twisleton Stores!\n\nPurchases:\n\n"
-    val priceStringFormat = "%-20s%s%n"
+      "\nThank you for shopping at Twisleton Stores!\n\nPurchases:\n-------------------------------------\n"
+    val priceStringFormat = "%-32s%s%n-------------------------------------%n"
 
     checkout.shoppingCart.items.foreach(item => {
       receipt =
         receipt.concat(priceStringFormat.format(item, formatPrice(item.price)))
     })
 
-    receipt = receipt.concat(
-      "\n" +
+    if (checkout.appliedOffers.length != 0) {
+      receipt =
+        receipt.concat("\nOffers:\n-------------------------------------\n")
+      checkout.appliedOffers.foreach(offer => {
+        receipt = receipt.concat(priceStringFormat.format(offer.name, ""))
+      })
+    }
+
+    receipt = receipt.concat("\n-------------------------------------\n")
+    if (checkout.totalDiscounts != 0) {
+      receipt = receipt.concat(
         priceStringFormat.format(
           "Subtotal: ",
           formatPrice(checkout.shoppingCart.total)
         )
-    )
+      )
+      receipt = receipt.concat(
+        priceStringFormat.format(
+          "Discounts: ",
+          formatPrice(checkout.totalDiscounts)
+        )
+      )
+    }
+
     receipt.concat(
       priceStringFormat.format(
         "Total: ",
@@ -96,7 +113,7 @@ object Shop extends App {
     var totalDiscounts: BigDecimal = 0
     val total = offers.foldLeft(shoppingCart.total)((acc, currentOffer) => {
       val discount = currentOffer.getDiscount(shoppingCart)
-      totalDiscounts -= discount
+      totalDiscounts += discount
       if (discount != 0)
         appliedOffers += currentOffer
       acc - discount

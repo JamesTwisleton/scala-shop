@@ -64,6 +64,6 @@ class CheckoutTest extends org.scalatest.funsuite.AnyFunSuite {
       shoppingCart,
       Array(bogofOnApplesOffer, threeForThePriceOfTwoOnOrangesOffer)
     )
-    assert(checkout.totalDiscounts === -0.85)
+    assert(checkout.totalDiscounts === 0.85)
   }
 }
